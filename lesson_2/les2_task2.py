@@ -5,7 +5,7 @@
 # Для заполнения списка элементов использовать функцию input().
 my_list = []
 user_Element = input("Введиет эелемент списка: ")
-while user_Element not in ['off', 'нет']:
+while user_Element not in ['ok', 'ок']:
     my_list.append(user_Element)
     user_Element = input("Добавьте элемент в список (выход-'no'): ")
 print(my_list)
