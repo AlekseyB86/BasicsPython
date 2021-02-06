@@ -28,5 +28,5 @@ personal_date(
     year_birth="1958",
     city="Гуляй-Борисовка",
     email="tutu@mail.ru",
-    tel = 89168887766,
+    tel=89168887766,
 )
