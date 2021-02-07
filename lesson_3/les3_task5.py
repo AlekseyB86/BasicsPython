@@ -22,7 +22,8 @@ summa = 0
 char_s = '!'
 flag = True
 while flag:
-    if summa != 0: print(f"Сумма чисел: {summa}")
+    if summa != 0:
+        print(f"Сумма чисел: {summa}")
     numbers = input("Введите ещё числа через пробел: ")
     numbers = numbers.split(" ")
     for i in numbers:
