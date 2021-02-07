@@ -4,9 +4,9 @@
 # предусмотреть обработку ситуации деления на ноль.
 
 
-def my_func(s_1, s_2):
+def my_func(num_1, num_2):
     try:
-        result = s_1 / s_2
+        result = num_1 / num_2
         return int(result) if result.is_integer() else round(result, 3)
     except ZeroDivisionError:
         print('Делить на ноль нельзя!')
