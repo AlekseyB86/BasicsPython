@@ -4,18 +4,18 @@
 # предусмотреть обработку ситуации деления на ноль.
 
 
-def my_func(num_1, num_2):
+def my_func(a, b):
     try:
-        result = num_1 / num_2
-        return int(result) if result.is_integer() else round(result, 3)
+        a = float(a)
+        b = float(b)
+        result = a / b
+        print(int(result) if result.is_integer() else round(result, 3))
+    except ValueError:
+        print('Введено не число!')
     except ZeroDivisionError:
-        print('Делить на ноль нельзя!')
+        print('Нельзя делить на 0!')
 
 
-try:
-    number_1 = float(input('Введите первое число: '))
-    number_2 = float(input('Введите второе число: '))
-except ValueError:
-    print("Необходимо ввести число!")
-
-print(my_func(number_1, number_2))
+x = input('Введите первое число: ')
+y = input('Введите второе число: ')
+my_func(x, y)
