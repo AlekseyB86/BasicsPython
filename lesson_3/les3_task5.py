@@ -18,23 +18,23 @@ def is_number(x):
             return 0
 
 
-summa = 0
+result = 0
 char_s = '!'
 flag = True
 while flag:
-    if summa != 0:
-        print(f"Сумма чисел: {summa}")
+    if result != 0:
+        print(f"Сумма чисел: {result}")
     numbers = input("Введите ещё числа через пробел: ")
     numbers = numbers.split(" ")
     for i in numbers:
         if char_s not in i:
             i = is_number(i)
-            summa += i
+            result += i
         else:
             i = i.split(char_s)
             i = is_number(i[0])
-            summa += i
-            print(f"Сумма чисел: {summa}")
-            print("Программа завершена!")
+            result += i
+            print(f"Сумма чисел: {result}")
+            print('Программа завершена!')
             flag = False
             break
