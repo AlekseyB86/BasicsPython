@@ -8,10 +8,15 @@
 # о пользователе одной строкой.
 
 def personal_date(**kwargs):
-    result = []
-    for arg in kwargs.values():
-        result.append(str(arg))
-    return " ".join(result)
+    try:
+        int(kwargs.get('year_birth'))
+        int(kwargs.get('tel'))
+        result = []
+        for arg in kwargs.values():
+            result.append(str(arg))
+        return " ".join(result)
+    except ValueError:
+        print('Год и телефон должен содержать только числа!')
 
 
 print(personal_date(name="Сидр", surname="Сидоров", year_birth=1958,
