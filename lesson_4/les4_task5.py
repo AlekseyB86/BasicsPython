@@ -10,4 +10,6 @@ def my_func(prev_el, el):
     return prev_el * el
 
 
-print(reduce(my_func, [el for el in range(100, 1001) if el % 2 == 0]))
+num_1 = 100
+num_2 = 1000
+print(reduce(my_func, [el for el in range(num_1, num_2 + 1) if el % 2 == 0]))
