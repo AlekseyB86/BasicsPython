@@ -12,7 +12,7 @@
 # предусмотреть условие, при котором повторение элементов списка будет прекращено.
 
 
-def get_count():
+def example_count():
     from itertools import count
 
     num_1 = int(input("Введите первое число: "))
@@ -27,7 +27,7 @@ def get_count():
         print("Второе число должно быть не меньше первого первого!")
 
 
-def get_cycle():
+def example_cycle():
     from itertools import cycle
 
     text = input("Введите слово: ")
@@ -41,5 +41,5 @@ def get_cycle():
 
 
 if __name__ == '__main__':
-    get_count()
-    get_cycle()
+    example_count()
+    example_cycle()
