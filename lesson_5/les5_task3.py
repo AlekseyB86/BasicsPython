@@ -8,8 +8,8 @@ with open("text_3.txt", "r", encoding="utf-8") as f_obj:
     f_obj.seek(0)
     content = [stroke.strip().split() for stroke in f_obj]
 content = {el[0]: float(el[1]) for el in content}
-employees_low_salary = [surname for surname in content if content[surname] < 20000]
 # 1й вариант
+# employees_low_salary = [surname for surname in content if content[surname] < 20000]
 # print(f'Сотрудники с окладом меньше 20 тыс.: {", ".join(employees_low_salary)}')
 
 # 2й вариант
