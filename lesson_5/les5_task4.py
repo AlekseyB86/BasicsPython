@@ -8,16 +8,14 @@
 # считывающую построчно данные. При этом английские числительные
 # должны заменяться на русские. Новый блок строк должен записываться
 # в новый текстовый файл.
+from translate import Translator
+
+tr = Translator(to_lang='ru')
 with open("text_4.txt", "r", encoding="utf-8") as f_obj:
-    f_obj.seek(0)
-    content = [stroke.strip() for stroke in f_obj]
-rus_number = ['один', 'два', 'три', 'четыре']
-new_content = []
-i = 0
+    content = [stroke.strip().split() for stroke in f_obj]
 for el in content:
-    new_content.append(rus_number[i] + el[el.index("-") - 1:])
-    i += 1
-print(new_content)
+    el.insert(0, tr.translate(el.pop(0)))
+content = [' '.join(el) for el in content]
 with open("text_4_1.txt", "w", encoding="utf-8") as f_obj2:
-    for el in new_content:
+    for el in content:
         f_obj2.writelines(f'{el}\n')
