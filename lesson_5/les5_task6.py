@@ -10,6 +10,6 @@ import re
 
 
 with open("text_6.txt", "r", encoding="utf-8") as f_obj:
-    content = [stroke.strip().split() for stroke in f_obj]
+    content = [stroke.strip().split(':') for stroke in f_obj]
     content = {el[0]: sum([int(i) for i in re.findall(r'\d+', el[1])]) for el in content}
 pprint(content, sort_dicts=False)
