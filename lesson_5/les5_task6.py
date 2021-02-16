@@ -6,13 +6,10 @@
 # Сформировать словарь, содержащий название предмета и общее количество
 # занятий по нему. Вывести словарь на экран.
 from pprint import pprint
+import re
+
 
 with open("text_6.txt", "r", encoding="utf-8") as f_obj:
-    content = [stroke.strip() for stroke in f_obj]
-chars_r = ["-", "(пр)", "(л)", "(лаб)", ":"]
-for ch in chars_r:
-    content = [el.replace(ch, "") for el in content]
-content = [el.split() for el in content]
-content = [[el[0], sum([int(i) for i in el if i.isdigit()])] for el in content]
-content_dict = {el[0]: el[1] for el in content}
-pprint(content_dict, sort_dicts=False)
+    content = [stroke.strip().split() for stroke in f_obj]
+    content = {el[0]: sum([int(i) for i in re.findall(r'\d+', el[1])]) for el in content}
+pprint(content, sort_dicts=False)
