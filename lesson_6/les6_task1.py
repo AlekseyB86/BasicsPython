@@ -22,11 +22,11 @@ class TrafficLight:
         while i != 0:
             print('\n' * 8)
             cprint('STOP!', 'red')
-            time.sleep(5)
+            time.sleep(7)
             cprint('Attention!', 'yellow')
-            time.sleep(1)
+            time.sleep(2)
             cprint('GO!GO!GO!', 'green')
-            time.sleep(3)
+            time.sleep(4)
             i -= 1
 
 
