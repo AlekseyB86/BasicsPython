@@ -10,25 +10,25 @@
 # Задачу можно усложнить, реализовав проверку порядка режимов, и при его
 # нарушении выводить соответствующее сообщение и завершать скрипт.
 import time
-from termcolor import cprint
+from itertools import cycle
 
 
 class TrafficLight:
-    def __init__(self):
-        self.__color = None
+    def __init__(self, color='Black'):
+        self._color = color
+        self.tuple_color = ('RED', 'YELLOW', 'GREEN')
 
-    def running(self):
-        i = 2
-        while i != 0:
-            print('\n' * 8)
-            cprint('STOP!', 'red')
-            time.sleep(7)
-            cprint('Attention!', 'yellow')
-            time.sleep(2)
-            cprint('GO!GO!GO!', 'green')
-            time.sleep(4)
-            i -= 1
+    def running(self, color_time):
+        self._check_order(color_time)
+        for color, timer in cycle(color_time.items()):
+            self._color = color
+            print(self._color)
+            time.sleep(timer)
+
+    def _check_order(self, color_time):
+        if self.tuple_color != tuple(color_time.keys()):
+            return print("Нарушен порядок работы светофора!")
 
 
 traffic_light_1 = TrafficLight()
-traffic_light_1.running()
+traffic_light_1.running({'RED': 7, 'YELLOW': 2, 'GREEN': 5})
