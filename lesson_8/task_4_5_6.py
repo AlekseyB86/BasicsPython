@@ -15,23 +15,15 @@
 # Например, для указания количества принтеров, отправленных на склад, нельзя использовать строковый тип данных.
 # Подсказка: постарайтесь по возможности реализовать в проекте «Склад оргтехники» максимум
 # возможностей, изученных на уроках по ООП.
-from abc import ABC, abstractmethod
-
-
-class Storage:
-    _count_office_equipment = 0
-
-    def __init__(self):
-        _count_office_equipment += 1
+from abc import abstractmethod
 
 
 class OfficeEquipment:
-    bottom_on = False
+    count = 'шт'
 
-    def __init__(self, producer, name):
-        self._producer = producer
+    def __init__(self, name):
         self._name = name
-    
+
     def __str__(self):
         if isinstance(self._specification(), str):
             return self._specification()
@@ -41,42 +33,99 @@ class OfficeEquipment:
     def _specification(self):
         pass
 
+    @abstractmethod
+    def _key(self):
+        pass
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self._key() == other._key()
+
+    def __hash__(self):
+        return hash(self._key())
+
 
 class Printer(OfficeEquipment):
 
-    def __init__(self, producer, name, color_print, print_type):
-        super().__init__(self, producer, name)
-        self._color_print = color_print
+    def __init__(self, name, print_type):
+        super().__init__(name)
         self._print_type = print_type
 
     def _specification(self):
-        print(f'Принтер {self._producer} модель {self._name}')
+        return f'Принтер {self._name}, тип печати: {self._print_type}'
+
+    def _key(self):
+        return ''.join([self._name, self._print_type])
 
 
 class Scanner(OfficeEquipment):
 
-    def __init__(self, producer, name, color_scanner):
-        super().__init__(self, producer, name)
-        self._color_scanner = color_scanner
+    def __init__(self, name, resolution):
+        super().__init__(name)
+        self._resolution = resolution
 
     def _specification(self):
-        pass
+        return f'Сканер{self._name}, разрешение: {self._resolution} dpi'
+
+    def _key(self):
+        return ''.join([self._name, str(self._resolution)])
 
 
-class Xerox(OfficeEquipment):
+class Storage:
 
-    def __init__(self, producer, name, color_copy, ):
-        super().__init__(self, producer, name)
-        self._color_copy = color_copy
+    def __init__(self, name):
+        self._name = name
+        self._stock = {}
 
-    def _specification(self):
-        pass
+    def __str__(self):
+        return f'{self._name}'
+
+    def _change_dty(self, products, qty):
+        try:
+            self._validate_input(products, qty)
+        except Exception as err:
+            print(err)
+        else:
+            self._stock[products] = self._stock.setdefault(products, 0) + qty
+
+    def _validate_input(self, products, qty):
+        if not isinstance(products, OfficeEquipment):
+            raise TypeError(f'Неверный тип товара {type(products)}')
+        if not isinstance(qty, int):
+            raise TypeError(f'Неверный тип количества {type(qty)}')
+        stock = self._current_stock(products)
+        if stock + qty > 0:
+            f'Товара <{products}> недостаточно на складе. Требуется {abs(qty)}, есть {stock}.'
+
+    def _current_stock(self, products):
+        return self._stock.get(products, 0)
+
+    def purchase(self, products, qty):
+        self._change_dty(products, qty)
+
+    def requirement(self, products, qty):
+        self._change_dty(products, -qty)
+
+    def print_stock(self):
+        print(f'Остаток на складе: {self._name}')
+        print('\n'.join([f'\t{k}: {str(v)} {k.count}' for k, v in self._stock.items()]))
 
 
-class MultiFunctionDevice(OfficeEquipment, Printer, Scanner, Xerox):
-    pass
+def main():
+    
+    storage = Storage('Склад GB')
+    storage.purchase(Scanner('Samsung', 600), 5)
+    storage.purchase(Printer('Brother', 'laser'), 5)
+    storage.purchase(Scanner('Samsung', 600), 4)
 
-    def _specification(self):
-        pass
+    storage.requirement(Scanner('Samsung', 600), 6)
+    storage.requirement(Scanner('Samsung', 600), 30)
+
+    print()
+    storage.print_stock()
 
 
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as e:
+        print(e)
